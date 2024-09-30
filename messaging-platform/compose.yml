@@ -1,0 +1,6 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management  # RabbitMQ with management plugin
+    ports:
+      - "5672:5672"             # AMQP protocol port
+      - "15672:15672"           # Management UI port
