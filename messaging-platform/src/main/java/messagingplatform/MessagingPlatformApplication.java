@@ -1,8 +1,13 @@
 package messagingplatform;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import messagingplatform.data.Message;
+import messagingplatform.service.Producer;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.util.UUID;
 
 @SpringBootApplication
 public class MessagingPlatformApplication {
@@ -11,10 +16,10 @@ public class MessagingPlatformApplication {
 		SpringApplication.run(MessagingPlatformApplication.class, args);
 	}
 
-	// this listener keeps the app running, listens for messages from rabbitMQ
-	@RabbitListener(queues = "queue")
-	public void listen(String message) {
-		System.out.println("Received message: " + message);
+	@Bean
+	CommandLineRunner commandLineRunner(Producer producer) {
+		return args -> producer.sendMessage(new Message(
+				UUID.randomUUID(),
+				"sender", "receiver", "content"));
 	}
-
 }

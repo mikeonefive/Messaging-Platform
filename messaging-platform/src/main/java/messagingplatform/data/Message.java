@@ -1,4 +1,4 @@
-package src.main.java.messagingplatform.data;
+package messagingplatform.data;
 
 import java.util.UUID;
 
@@ -49,5 +49,15 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", sender='" + sender + '\'' +
+                ", recipient='" + recipient + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }
