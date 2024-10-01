@@ -1,10 +1,12 @@
 package linkmobility.rabbitmqtutorial.producer;
 
+import linkmobility.rabbitmqtutorial.colors.AnsiColors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class MessageProducer {
@@ -28,7 +30,10 @@ public class MessageProducer {
 
     public void sendMessage(String message) {
         // logger.info(String.format("Sending message: %s", message)); for better performance use next line
-        logger.info("Sending message: {}", message);
+        logger.info(AnsiColors.YELLOW +
+                "Sending message -> {}" +
+                AnsiColors.RESET, message);
+
         rabbitTemplate.convertAndSend(exchange, routingKey, message); // send message to exchange and route it to the queue with the key
     }
 }
