@@ -2,6 +2,9 @@ package messagingplatform;
 
 import messagingplatform.data.Message;
 import messagingplatform.service.Producer;
+import messagingplatform.service.generators.RandomPhraseGenerator;
+import messagingplatform.service.generators.RandomWordGenerator;
+import messagingplatform.service.generators.ReceiverNameGenerator;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +23,8 @@ public class MessagingPlatformApplication {
 	CommandLineRunner commandLineRunner(Producer producer) {
 		return args -> producer.sendMessage(new Message(
 				UUID.randomUUID(),
-				"sender", "receiver", "content"));
+				RandomWordGenerator.generate(),
+				ReceiverNameGenerator.generate(),
+				RandomPhraseGenerator.generate()));
 	}
 }
