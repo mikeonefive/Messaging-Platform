@@ -55,17 +55,29 @@ public class ScheduledThreadpoolWithGracefulShutdown {
 
     // Function to handle the thread pool shutdown gracefully
     private static void shutdownThreadPool(ScheduledExecutorService threadPool, int secondsToShutdown) {
-        threadPool.shutdown(); // Initiates shutdown
+
+        threadPool.shutdown(); // initiate shutdown
 
         try {
-            if (!threadPool.awaitTermination(secondsToShutdown, TimeUnit.SECONDS)) {
-                logger.info("Threadpool did not terminate in the specified time.");
-                List<Runnable> droppedTasks = threadPool.shutdownNow();
-                logger.info("Threadpool was abruptly shut down. " + droppedTasks.size() + " tasks will not be executed.");
+            // wait for pool to terminate gracefully
+            if (threadPool.awaitTermination(secondsToShutdown, TimeUnit.SECONDS)) {
+                logger.info("Threadpool terminated gracefully.");
+                return;
             }
+
+            logger.info("Threadpool did not terminate in the specified time.");
+
         } catch (InterruptedException e) {
-            threadPool.shutdownNow(); // Force shutdown on interruption
             Thread.currentThread().interrupt(); // Preserve interrupt status because otherwise thread "forgets" that it was interrupted after exception is caught
+            
+        } finally {
+            // call shutdownNow and check if there are remaining tasks
+            List<Runnable> droppedTasks = threadPool.shutdownNow();
+
+            if (droppedTasks.isEmpty())
+                logger.info("All tasks completed before shutdown. No tasks were interrupted.");
+            else
+                logger.info("Threadpool was abruptly shut down. " + droppedTasks.size() + " tasks will not be executed.");
         }
     }
 }

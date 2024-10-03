@@ -52,7 +52,7 @@ public class RabbitMQConfig {
 
     // define rabbitTemplate because the default template can only handle simple types like String
     // this here will make sure our message object is supported (sending and receiving messages of this type)
-    // ConnectionFactory is required, creates and manages connection between application and RabbitMQ
+    // ConnectionFactory is required, creates and manages connection between application and RabbitMQ server (e.g. handles connection for @RabbitListener and RabbitMQ server)
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
