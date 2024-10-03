@@ -4,13 +4,14 @@ package linkmobility.threadpooltutorial;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class Threadpool {
+public class SimpleThreadpool {
 
     public static void main(String[] args) {
 
         ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
         int totalNumberOfTasks = 5;
 
+        // schedule the tasks
         for (int i = 0; i < totalNumberOfTasks; i++) {
             int currentTaskNumber = i;
 
