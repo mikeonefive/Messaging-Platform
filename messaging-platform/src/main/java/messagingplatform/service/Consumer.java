@@ -1,6 +1,7 @@
 package messagingplatform.service;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import messagingplatform.data.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,11 @@ public class Consumer {
 
     public void logMessage (Message message) {
         logger.info("Received message <- {}", message);
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        threadPool.shutdown();
     }
 }
 

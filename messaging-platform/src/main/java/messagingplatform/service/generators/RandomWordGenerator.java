@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandomWordGenerator {
 
     private static final String characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()&%.,!?";
-    private static final int minLength = 2;
+    private static final int minLength = 1;
     private static final int maxLength = 10;
 
     public static String generate() {

@@ -50,14 +50,12 @@ public class Producer {
     }
 
     public void startProducingMessages(int numberOfMessages) {
-        Runnable createAndSendMessage = () -> {
-            sendOneMessage(new Message(
-                    UUID.randomUUID(),
-                    RandomWordGenerator.generate(),
-                    ReceiverNameGenerator.generate(),
-                    RandomPhraseGenerator.generate()
-            ));
-        };
+        Runnable createAndSendMessage = () -> sendOneMessage(new Message(
+                UUID.randomUUID(),
+                RandomWordGenerator.generate(),
+                ReceiverNameGenerator.generate(),
+                RandomPhraseGenerator.generate()
+        ));
 
         // schedule sending messages using the thread pool
         for (int i = 0; i < numberOfMessages; i++) {
